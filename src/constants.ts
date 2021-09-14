@@ -27,7 +27,8 @@ export const contracts = {
     preSaleToBeDist: "0x8b9cA4469C49ee4506b04315FFB6b21349052d67",
     multisig: '0x16cEa306506c387713C70b9C1205fd5aC997E78E',
     stakingDistributor: '0x6151570934470214592AA051c28805cF4744BCA7',
-    stkTruDistributor: '0xecfD4F2C07EABdb7b592308732B59713728A957F'
+    stkTruDistributor: '0xecfD4F2C07EABdb7b592308732B59713728A957F',
+    liquidityGaugeDistributor: '0xc7AB606e551bebD69f7611CdA1Fc473f8E5b8f70'
 }
 
 export const wallets = {
