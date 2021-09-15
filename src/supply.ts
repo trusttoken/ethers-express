@@ -12,13 +12,14 @@ export const getCirculatingSupply = async () => {
     const incentiveCirculating = await getIncentiveCirculating()
     const companyCirculating = getCompanyCirculating()
     const preSale = await getPreSale()
+
     console.log('burned: '+burned)
     console.log('teamCirculating: '+teamCirculating)
     console.log('futureTeamCirculating: '+futureTeamCirculating)
     console.log('incentiveCirculating: '+incentiveCirculating)
     console.log('companyCirculating: '+companyCirculating)
     console.log('preSale: '+preSale)
-    
+
     const circulatingSupply = -burned+teamCirculating+futureTeamCirculating+incentiveCirculating+companyCirculating+preSale
     return circulatingSupply
 }
@@ -32,7 +33,7 @@ const getTotalSupply = async () => {
 }
 
 // calculate burned as max supply - total supply
-// burned from etherscan 
+// burned from etherscan
 export const getBurned = async () => {
     const supply = await getTotalSupply()
     const MAX_SUPPLY = 1450000000
@@ -46,7 +47,7 @@ const getTeamCirculating = async () => {
     const truContract = contractAt('TrustToken', contracts.tru)
     const grantedButNotUnlocked = await truContract.balanceOf(contracts.grantedButNotUnlocked)/1e8
     const options = await truContract.balanceOf(contracts.options)/1e8
-    const teamCirculating = TOTAL_TEAM-grantedButNotUnlocked-options    
+    const teamCirculating = TOTAL_TEAM-grantedButNotUnlocked-options
 
     return teamCirculating
 }
@@ -73,8 +74,9 @@ const getIncentiveCirculating = async() => {
     const MULTISIG = await truContract.balanceOf(contracts.multisig)/1e8
     const STAKING_DISTRIBUTOR = await truContract.balanceOf(contracts.stakingDistributor)/1e8
     const STK_TRU_DISTRIBUTOR = await truContract.balanceOf(contracts.stkTruDistributor)/1e8
-    
-    const incentiveCirculating = TOTAL_INCENTIVE-BAL_BAL_TRU-UNI_ETH_TRU-UNI_TUSD_LP-TrueFi_LP-TRU_Voters-NXM-MULTISIG-STAKING_DISTRIBUTOR-STK_TRU_DISTRIBUTOR
+    const LIQ_GAUGE_DISTRIBUTOR = await truContract.balanceOf(contracts.liquidityGaugeDistributor)/1e8
+
+    const incentiveCirculating = TOTAL_INCENTIVE-BAL_BAL_TRU-UNI_ETH_TRU-UNI_TUSD_LP-TrueFi_LP-TRU_Voters-NXM-MULTISIG-STAKING_DISTRIBUTOR-STK_TRU_DISTRIBUTOR-LIQ_GAUGE_DISTRIBUTOR
     return incentiveCirculating
 }
 const getCompanyCirculating = () => {
@@ -87,7 +89,7 @@ const getCompanyCirculating = () => {
 
 const getPreSale = async () => {
     const TOTAL_PRESALE = 387917402
-    
+
     const truContract = contractAt('TrustToken', contracts.tru)
     const toBeDistributed = await truContract.balanceOf(contracts.preSaleToBeDist)/1e8
     const alreadyDist = TOTAL_PRESALE-toBeDistributed
@@ -98,5 +100,3 @@ const getPreSale = async () => {
 
     return preSale
 }
-
-
