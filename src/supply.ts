@@ -76,9 +76,9 @@ const getIncentiveCirculating = async() => {
     const STAKING_DISTRIBUTOR = await truContract.balanceOf(contracts.stakingDistributor)/1e8
     const STK_TRU_DISTRIBUTOR = await truContract.balanceOf(contracts.stkTruDistributor)/1e8
     const LIQ_GAUGE_DISTRIBUTOR = await truContract.balanceOf(contracts.liquidityGaugeDistributor)/1e8
-    const UNMARKED_INCENTIVE = await truContract.balanceOf(contracts.unmarkedIncentives)/1e8
+    const PURCHASER_MULTISIG = await truContract.balanceOf(contracts.purchaserDistributionMultisig)/1e8
 
-    const incentiveCirculating = TOTAL_INCENTIVE-BAL_BAL_TRU-UNI_ETH_TRU-UNI_TUSD_LP-TrueFi_LP-TRU_Voters-NXM-MULTISIG-STAKING_DISTRIBUTOR-STK_TRU_DISTRIBUTOR-LIQ_GAUGE_DISTRIBUTOR-UNMARKED_INCENTIVE
+    const incentiveCirculating = TOTAL_INCENTIVE-BAL_BAL_TRU-UNI_ETH_TRU-UNI_TUSD_LP-TrueFi_LP-TRU_Voters-NXM-MULTISIG-STAKING_DISTRIBUTOR-STK_TRU_DISTRIBUTOR-LIQ_GAUGE_DISTRIBUTOR-PURCHASER_MULTISIG
     return incentiveCirculating
 }
 const getCompanyCirculating = () => {

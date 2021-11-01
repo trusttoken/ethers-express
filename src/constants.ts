@@ -33,5 +33,5 @@ export const contracts = {
     liquidityGaugeDistributor: '0xc7AB606e551bebD69f7611CdA1Fc473f8E5b8f70',
     safu: '0x96078ee7aDf86328f61b54b72127121683B3c94E',
     communityTreasury: '0xE74B87233A43E73bdb002816a2290DC899eB73F3',
-    unmarkedIncentives: '0x4A10ab6Af3A7d1FEa49aADc99059d581B3fba7E7',
+    purchaserDistributionMultisig: '0x4A10ab6Af3A7d1FEa49aADc99059d581B3fba7E7',
 }
