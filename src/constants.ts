@@ -34,4 +34,6 @@ export const contracts = {
     safu: '0x96078ee7aDf86328f61b54b72127121683B3c94E',
     communityTreasury: '0xE74B87233A43E73bdb002816a2290DC899eB73F3',
     purchaserDistributionMultisig: '0x4A10ab6Af3A7d1FEa49aADc99059d581B3fba7E7',
+    companyUnlock2021: '0x5b485df8f00080D515bE666543b40904fbf9a3Fd',
+    companyUnlock2022: '0xB291FbC677839d5b56a15cF0629300222676D57E',
 }
