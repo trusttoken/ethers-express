@@ -9,7 +9,7 @@ export const getCirculatingSupply = async () => {
     const teamCirculating = await getTeamCirculating()
     const futureTeamCirculating = await getFutureTeamCirculating()
     const incentiveCirculating = await getIncentiveCirculating()
-    const companyCirculating = getCompanyCirculating()
+    const companyCirculating = await getCompanyCirculating()
     const preSale = await getPreSale()
     const protocolBalances = await getProtocolBalances()
 
@@ -62,7 +62,7 @@ const getFutureTeamCirculating = async () => {
     return futureTeamCirculating
 }
 
-const getIncentiveCirculating = async() => {
+const getIncentiveCirculating = async () => {
     const TOTAL_INCENTIVE = 565500000
 
     const truContract = contractAt('TrustToken', contracts.tru)
@@ -81,12 +81,13 @@ const getIncentiveCirculating = async() => {
     const incentiveCirculating = TOTAL_INCENTIVE-BAL_BAL_TRU-UNI_ETH_TRU-UNI_TUSD_LP-TrueFi_LP-TRU_Voters-NXM-MULTISIG-STAKING_DISTRIBUTOR-STK_TRU_DISTRIBUTOR-LIQ_GAUGE_DISTRIBUTOR-PURCHASER_MULTISIG
     return incentiveCirculating
 }
-const getCompanyCirculating = () => {
+const getCompanyCirculating = async () => {
     const TOTAL_COMPANY = 163082598
-    const FIRST_RELEASE_DATE = Date.parse('21 Nov 2020 00:00:00 GMT')
-    const numberOfRelease = Math.ceil((Date.now()-FIRST_RELEASE_DATE)/(1000*60*60*24*30*12))
-    const company = TOTAL_COMPANY * numberOfRelease/3
-    return company
+    // subtract undistributed unlock balances
+    const truContract = contractAt('TrustToken', contracts.tru)
+    const UNDISTRIBUTED_UNLOCK_BALANCE_2021 = await truContract.balanceOf(contracts.companyUnlock2021)/1e8
+    const UNDISTRIBUTED_UNLOCK_BALANCE_2022 = await truContract.balanceOf(contracts.companyUnlock2022)/1e8
+    return TOTAL_COMPANY - UNDISTRIBUTED_UNLOCK_BALANCE_2021 - UNDISTRIBUTED_UNLOCK_BALANCE_2022
 }
 
 const getPreSale = async () => {
