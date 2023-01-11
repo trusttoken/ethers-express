@@ -36,4 +36,6 @@ export const contracts = {
     purchaserDistributionMultisig: '0x4A10ab6Af3A7d1FEa49aADc99059d581B3fba7E7',
     companyUnlock2021: '0x5b485df8f00080D515bE666543b40904fbf9a3Fd',
     companyUnlock2022: '0xB291FbC677839d5b56a15cF0629300222676D57E',
+    protocolDaoTreasury: '0x863461596ab57b91b873b26d4f0a701a9703b9ca',
+    incentivesDaoTreasury: '0xB74c97c64d52f8f746efA72CD83D59cDf75F1a98',
 }
