@@ -1,4 +1,4 @@
-import { getCirculatingSupply} from './supply'
+import { getCirculatingSupply, getTotalSupply } from './supply'
 
 const createRoute = (call: Function) => async (req, res) => {
     try {
@@ -11,3 +11,4 @@ const createRoute = (call: Function) => async (req, res) => {
 }
 
 export const circulatingSupply = createRoute(getCirculatingSupply)
+export const totalSupply = createRoute(getTotalSupply)
