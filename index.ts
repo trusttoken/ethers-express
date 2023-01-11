@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const rateLimit = require('express-rate-limit')
-const { circulatingSupply} = require('./src/routes')
+const { circulatingSupply, totalSupply } = require('./src/routes')
 
 
 const app = express()
@@ -13,6 +13,11 @@ const limit = rateLimit({
 });
 
 app.use(cors())
+
 app.use('/circulatingSupply', limit)
 app.get('/circulatingSupply', circulatingSupply)
+
+app.use('/totalSupply', limit)
+app.get('/totalSupply', totalSupply)
+
 app.listen(port, () => console.log(`App listening on PORT ${port}`))

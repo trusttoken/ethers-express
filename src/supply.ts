@@ -18,23 +18,9 @@ const LOCKED_SUPPLY_ADDRESSES = [
     contracts.preSaleRegisteredUnclaimed,
 ]
 
-export const getCirculatingSupply = async (): Promise<number> => {
-    const truContract = getTruContract()
-    const decimals = await truContract.decimals()
-    const totalSupply = await getTotalSupply(truContract)
-    const lockedSupply = await getLockedSupply(truContract)
-    const circulatingSupplyBN = totalSupply.sub(lockedSupply)
-
-    return parseFloat(formatUnits(circulatingSupplyBN, decimals))
-}
-
 const getTruContract = (): Contract => {
     const TrustToken = contractAt('TrustToken', contracts.tru)
     return TrustToken.connect(wallet)
-}
-
-const getTotalSupply = async (truContract: Contract): Promise<BigNumber> => {
-    return await truContract.totalSupply()
 }
 
 const getLockedSupply = async (truContract: Contract): Promise<BigNumber> => {
@@ -44,4 +30,20 @@ const getLockedSupply = async (truContract: Contract): Promise<BigNumber> => {
     return lockedBalances.reduce((prevValue, currValue) => {
         return prevValue.add(currValue)
     }, constants.Zero)
+}
+
+export const getCirculatingSupply = async (): Promise<number> => {
+    const truContract = getTruContract()
+    const decimals = await truContract.decimals()
+    const totalSupply = await truContract.totalSupply()
+    const lockedSupply = await getLockedSupply(truContract)
+    const circulatingSupplyBN = totalSupply.sub(lockedSupply)
+    return parseFloat(formatUnits(circulatingSupplyBN, decimals))
+}
+
+export const getTotalSupply = async (): Promise<number> => {
+    const truContract = getTruContract()
+    const decimals = await truContract.decimals()
+    const totalSupplyBN = await truContract.totalSupply()
+    return parseFloat(formatUnits(totalSupplyBN, decimals))
 }
