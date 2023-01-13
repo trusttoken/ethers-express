@@ -26,7 +26,7 @@ export const getCirculatingSupply = async () => {
 }
 
 // calculate total supply through tru contract
-const getTotalSupply = async () => {
+export const getTotalSupply = async () => {
     const TrustToken = contractAt('TrustToken', contracts.tru)
     const tru = await TrustToken.connect(wallet)
     const supply = await tru.totalSupply()/1e8
@@ -92,17 +92,18 @@ const getCompanyCirculating = async () => {
 
 const getPreSale = async () => {
     const TOTAL_PRESALE = 387917402
+    const TOTAL_UNLOCKS = 8
 
     const truContract = contractAt('TrustToken', contracts.tru)
-
     const toBeDistributed = await truContract.balanceOf(contracts.preSaleToBeDist)/1e8
     const registeredButUnclaimed = await truContract.balanceOf(contracts.preSaleRegisteredUnclaimed)/1e8
     const unclaimedMultiSig = await truContract.balanceOf(contracts.preSaleUnclaimedMultiSig)/1e8
     const alreadyDist = TOTAL_PRESALE-toBeDistributed-registeredButUnclaimed-unclaimedMultiSig
 
     const FIRST_RELEASE_DATE = Date.parse('21 Nov 2020 00:00:00 GMT')
-    const numberOfRelease = Math.ceil((Date.now()-FIRST_RELEASE_DATE)/(1000*60*60*24*30*3))
-    const preSale = alreadyDist * numberOfRelease/8
+    const releasePeriods = Math.ceil((Date.now()-FIRST_RELEASE_DATE)/(1000*60*60*24*30*3))
+    const unlocks = Math.min(releasePeriods, TOTAL_UNLOCKS)
+    const preSale = alreadyDist * unlocks/TOTAL_UNLOCKS
 
     return preSale
 }
@@ -111,5 +112,8 @@ const getProtocolBalances = async () => {
     const truContract = contractAt('TrustToken', contracts.tru)
     const safuBalance = await truContract.balanceOf(contracts.safu)/1e8
     const communityTreasuryBalance = await truContract.balanceOf(contracts.communityTreasury)/1e8
-    return safuBalance + communityTreasuryBalance
+    const protocolDaoTreasury = await truContract.balanceOf(contracts.protocolDaoTreasury)/1e8
+    const incentivesDaoTreasury = await truContract.balanceOf(contracts.incentivesDaoTreasury)/1e8
+
+    return safuBalance + communityTreasuryBalance + protocolDaoTreasury + incentivesDaoTreasury
 }
