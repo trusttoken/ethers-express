@@ -112,8 +112,8 @@ const getProtocolBalances = async () => {
     const truContract = contractAt('TrustToken', contracts.tru)
     const safuBalance = await truContract.balanceOf(contracts.safu)/1e8
     const communityTreasuryBalance = await truContract.balanceOf(contracts.communityTreasury)/1e8
-    const protocolDaoTreasury = await await truContract.balanceOf(contracts.protocolDaoTreasury)/1e8
-    const incentivesDaoTreasury = await await truContract.balanceOf(contracts.incentivesDaoTreasury)/1e8
+    const protocolDaoTreasury = await truContract.balanceOf(contracts.protocolDaoTreasury)/1e8
+    const incentivesDaoTreasury = await truContract.balanceOf(contracts.incentivesDaoTreasury)/1e8
 
     return safuBalance + communityTreasuryBalance + protocolDaoTreasury + incentivesDaoTreasury
 }
