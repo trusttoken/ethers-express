@@ -1,4 +1,4 @@
-import { getCirculatingSupply, getTotalSupply} from './supply'
+import { getCirculatingSupply, getTotalSupply } from './supply'
 
 const createRoute = (call: Function) => async (req, res) => {
     try {
